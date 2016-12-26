@@ -1,0 +1,40 @@
+<%- include layouts/header.ejs %>
+
+<div class="page-data">
+	<form method="post" action="/users/edit/<%=data[0].id%>">
+		<table cellpadding="11">
+			<tr>
+				<td class="label">FirstName</td><td>: <input type="text" name="firstname" value="<%=data[0].firstname%>" required></td>
+			</tr>
+			<tr>
+				<td class="label">LastName</td><td>: <input type="text" name="lastname" value="<%=data[0].lastname%>" required></td>
+			</tr>
+			<tr>
+				<td class="label">Email</td><td>: <input type="text" name="email" value="<%=data[0].email%>" required></td>
+			</tr>
+			<tr>
+				<td class="label" >Gender</td>
+				<td>
+					:<input type="radio" name="gender" value="male" required <% if (data[0].gender == 'male') { %> checked=true <% } %>  > Male
+  					<input type="radio" name="gender" value="female"  required <% if (data[0].gender == 'female') { %> checked=true <% } %> > Female
+  					<input type="radio" name="gender" value="other" required <% if (data[0].gender == 'other') { %> checked=true <% } %> > Other
+				</td>
+			</tr>
+			<tr>
+				<td class="label">DOB</td>	
+				<td>: <input type="date" name="dob" value="<%=userdob%>" required></td>
+			</tr>
+			<tr>
+                <td class="label"></td>
+                <td>
+                    &nbsp; <input type="submit" name="submit" value="Save">
+                    <input type="button" name="cancel" value="Cancel" class="cancel" onClick="cancelAdd()">
+                 </td>
+            </tr>
+		</table>
+	</form>
+</div>
+<%- include layouts/footer.ejs %>
+
+
+ 

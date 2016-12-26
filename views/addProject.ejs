@@ -1,0 +1,74 @@
+<%- include layouts/header.ejs %>
+
+
+	<div class="page-data">
+            <form method="post" enctype="multipart/form-data" action="/project/add">
+                <table cellpadding="11">
+                    <tr>
+                        <td class="label">Name</td><td>:<input type="text" name="name" placeholder="ex.mobile" required></td>
+                        <td class="label">Draft</td><td>:<input type="text" name="isDraft" value="1"></td>
+                    </tr>
+                    <tr>
+                        <td class="label">Name</td><td>:<input type="text" name="functionalDomain" value="1"></td>
+                    </tr>
+
+                    <tr>
+                        <td class="label">Name</td><td>:<input type="text" name="technicalDomain" value="1"></td>
+                    </tr>
+                    <tr>
+                        <td class="label">Name</td><td>:<input type="text" name="purposeOfProject" value="1"></td>
+                    </tr>
+                    <tr>
+                        <td class="label">Name</td><td>:<input type="text" name="deadlineCriticality" value="1"></td>
+                    </tr>
+
+                    <tr>
+                        <td class="label">scope document</td><td>:<input type="file" name="scopeDocument[]"></td>
+                    </tr>
+                    <tr>
+                        <td class="label">scope document</td><td>:<input type="file" name="scopeDocument[]"></td>
+                    </tr>
+                    <tr>
+                        <td class="label">proposal document</td><td>:<input type="file" name="proposalDocument[]"></td>
+                    </tr>
+                    <tr>
+                        <td class="label">proposal document</td><td>:<input type="file" name="proposalDocument[]"></td>
+                    </tr>
+                    <tr>
+                        <td class="label"></td>
+                        <td>
+                            &nbsp; <input type="submit" name="submit" value="Save">
+                           <input type="button" name="cancel" value="Cancel" class="cancel" onClick="cancelUser()">
+                        </td>
+                    </tr>
+                </table>
+            </form>
+	</div>
+	<!-- BHAVIN -->
+
+
+<%- include layouts/footer.ejs %>
+
+
+"isDraft"               : 0,
+  "clientId"              : 1,
+  "functionalDomain"      : 1,
+  "technicalDomain"       : 1,
+  "lob"                   : 1,
+  "purposeOfProject"      : 1,
+  "deadlineCriticality"   : 1,
+  "impact"                : 1,
+  "penaltyClause"         : 1,
+  "verbalCommunication"   : 1,
+  "lobHours"              : 12,
+  "engagementId"         : 1,
+  "projectCategory"       : 1,
+  "startDate"             : "1994-04-25",
+  "endDate"               : "2016-12-6",
+  "projectCost"           : "2000000",
+  "currency"              : 1,
+  "name"                  : "northEnd",
+  "status"                : 1,
+  "createdBy"             : 1,
+  "updatedBy"             : 1,
+  "lobData"        :"[{'lobId':1,'hours':'33'},{'lobId':2,'hours':'22'}]"

@@ -1,0 +1,100 @@
+module.exports.save = function(req, res) {
+    var input = JSON.parse(JSON.stringify(req.body));
+    req.getConnection(function(err, connection) {
+        if (err) {
+        	//Unable to connect MySql server
+            res.status(500).send({status: "-4", message : "Unable to process your request. Please try again later."});
+        } else {
+        	if( typeof input.status === 'undefined') {
+                 input.status = 1; 
+            }
+        	if(typeof input.name === 'undefined'){
+        		res.status(401).send({status: "-2", message: "Name is not defined."});
+        	} else if(validator.isEmpty(input.name)){
+                res.status(401).send({status: "-2", message: "Name can not be empty."});
+            } else {
+                var data = {
+                    name        : input.name,
+                    createdon   : currentDate,
+                    updatedon   : currentDate,
+                    status      : input.status,
+                    createdBy   : input.createdBy,
+                    updatedBy   : input.updatedBy
+                }
+                var defaultquery =  connection.query('SELECT * FROM skillgroupmaster WHERE name = ?', [data.name], function(err, rows) {
+                    if(err) {
+                        res.status(500).send({status: "-4", message : "Unable to process your request. Please try again later."});
+                    } else {
+                        if(rows.length) {
+                            res.status(401).send({status: "-2", message : "Name is duplicated entry or reused"});
+                        } else {
+                            var query = connection.query('INSERT INTO skillgroupmaster SET ?', data, function(err, rows) {
+                                if (err) {
+                                    res.status(500).send({status: "-4", message : "Unable to process your request. Please try again later."});
+                                } else {
+                                    res.status(200).send({status: "1", message: "Data added successfully."});
+                                }
+                            }); 
+                        }
+                    }
+                });
+            }
+        }
+    });
+}
+
+
+
+
+
+module.exports.save_edit = function(req, res) {
+    var input = JSON.parse(JSON.stringify(req.body));
+    var id = req.params.id;
+    if(id && typeof id !== 'undefined' && validator.isNumeric(id)) {
+        req.getConnection(function(err, connection) {
+            if (err) {
+                res.status(500).send({status: "-4", message : "Unable to process your request. Please try again later."});
+            } else {
+
+                if( (typeof input.name !== 'undefined') && (typeof input.name === 'string') && validator.isEmpty(input.name)){
+                    res.status(401).send({status: "-2", message: "Name can not be empty."});
+                } else {
+					var userdata = input;
+                    userdata.updatedon = currentDate;
+
+                    connection.query("SELECT * FROM skillgroupmaster WHERE name = ?", [userdata.name], function(err, rows) {
+                        if(err) {
+                            res.status(500).send({status: "-4", message : "Unable to process your request. Please try again later."});
+                        } else {
+                            if(rows.length) {
+                                res.status(401).send({status: "-2", message : "Name is duplicated entry or reused"});
+                            } else {
+                                connection.query("UPDATE skillgroupmaster SET ? WHERE skillGroupId = ?", [userdata, id], function(err, rows) {
+                                    if(err) {
+                                        res.status(500).send({status: "-4", message : "Unable to process your request. Please try again later."});
+                                    } else { 
+                                        if (rows.affectedRows > 0) {
+                                            res.status(200).json({
+                                                status: "1",
+                                                message: "Data Updated Successfully"
+                                            });      
+                                        } else {
+                                            res.status(404).json({
+                                                status: "0",
+                                                message: "Data Not Found"
+                                            });     
+                                        }
+                                    }
+                                }); 
+                            }    
+                        }
+                    });
+                    
+                } 
+            }
+        });
+    } else {
+        res.status(401).send({status: "-2", message: "provide valid id"});
+    } 
+}
+

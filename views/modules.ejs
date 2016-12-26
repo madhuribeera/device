@@ -1,0 +1,42 @@
+<%- include layouts/header.ejs %>
+
+<div Class="page-data">
+<div Class="data-btn">
+	<button onClick="addModule()">+add Module</button>
+</div>
+<div class="data-table">
+	<table border="2" cellpadding="7" cellspacing="7">
+		<tr>
+			<th width="50px">Id</th>
+			<th>Name</th>
+			<th>uniqueIdentifier</th>
+			<th>Status</th>
+			<th width="120px">Action</th>
+		</tr>
+		<% if(data.length){
+			
+             for(var i = 0;i < data.length;i++) { %>
+				
+                <tr>
+					<td align="center"><%= (i+1) %></td>
+					<td align="center"><%= data[i].name %></td>
+					<td align="center"><%= data[i].uniqueIdentifier %></td>
+					<td align="center"><%= data[i].status %></td>					
+					<td>
+                        <a class="a-inside edit" href="../module/edit/<%= data[i].moduleId %>">Edit</a>
+                       
+                        <a class="a-inside delete" href="../module/delete/<%= data[i].moduleId %>">Delete</a>
+                       
+                    </td>
+				</tr>
+		<% } 
+				}else{ %>
+				<tr>
+					<td colspan="3">No Module</td>
+				</tr>
+		<%	} %>	
+	   </table>
+    </div>
+</div>
+
+<%- include layouts/footer.ejs %>
